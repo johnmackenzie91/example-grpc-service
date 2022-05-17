@@ -1,0 +1,21 @@
+version: '3'
+
+tasks:
+  build:
+    desc: Builds the docker image
+    cmds:
+      - docker build -t example-grpc-service .
+  start:
+    desc: Runs the docker image
+    cmds:
+        - docker run -p 5001:5001 example-grpc-service
+
+  generate-code:
+    desc: generate source code from proto files
+    cmds:
+      - protoc --go_out=./internal/authors --go-grpc_out=./internal/authors ./protos/authors.proto
+  generate-certs:
+    desc: generate key and certificate for service
+    cmds:
+      - openssl genrsa 2048 > ca-key.pem
+      - openssl req -new -x509 -nodes -days 365000 -key ca-key.pem -out ca-cert.pem

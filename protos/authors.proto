@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "./;authors";
+
+service authors {
+  rpc All(AllFilter) returns (AllResponse) {}
+}
+
+message AllFilter {
+
+}
+
+message AllResponse {
+  repeated Author authors = 1;
+}
+
+message Author {
+  string name = 1;
+}
